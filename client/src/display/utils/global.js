@@ -33,6 +33,7 @@ export default createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif, 'Lato';
     font-weight: 400;
+    font-size: 12px;
     line-height: 1.6;
     margin: 0;
     /* Hide scrollbar for IE and Edge */
