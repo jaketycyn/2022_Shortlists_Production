@@ -198,10 +198,7 @@ const UserListIndividual = ({ _id }) => {
           {filteredListByParentId.map((item) => {
             return (
               <ItemWrapper key={item._id} itemtitle={item.itemTitle}>
-                <ItemHeader>
-                  {item.itemTitle} / {item._id}
-                </ItemHeader>
-
+                <ItemHeader>{item.itemTitle}</ItemHeader>
                 <div
                   className="delete"
                   onClick={() => toggleDeleteModal(item._id)}
