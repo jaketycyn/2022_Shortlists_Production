@@ -30,6 +30,7 @@ import {
   GET_USER_LIST_ITEM_SUCCESS,
   DELETE_USER_LIST_ITEM_BEGIN,
   DELETE_USER_LIST_ITEM_SUCCESS,
+
   //SENDING TO FRIENDS
   SET_FRIEND_IDENTIFIER,
 } from "./actions";
@@ -225,6 +226,8 @@ const reducer = (state, action) => {
       friendIdentifier: action.payload.friendIdentifier,
     };
   }
+
+  //ITEM UPDATES
 
   //!End Line - Put all action.type above
   throw new Error(`no such action : ${action.type}`);

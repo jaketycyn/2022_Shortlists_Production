@@ -407,6 +407,10 @@ const AppProvider = ({ children }) => {
     console.log("insideList: " + insideList);
     console.log("userId: " + userId);
 
+    const userSelection = { userId: userId, picked: false };
+    console.log("userSelection: " + userSelection);
+    console.log(JSON.stringify(userSelection));
+
     const parentListId = activeList[0]._id;
     const creatorId = activeList[0].createdById;
     try {
@@ -415,6 +419,7 @@ const AppProvider = ({ children }) => {
           itemTitle,
           parentListId,
           insideList,
+          userSelection,
         });
         dispatch({ type: CREATE_USER_LIST_ITEM_SUCCESS });
         dispatch({ type: CLEAR_VALUES });

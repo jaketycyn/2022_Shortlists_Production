@@ -23,7 +23,10 @@ const UserCustomListItemSchema = new mongoose.Schema(
       required: [true, "Please provide a parentListId"],
       maxlength: 50,
     },
-
+    selection: {
+      type: Array,
+      default: [],
+    },
     //come back later to do ranking stuff
     ranking: {
       type: Number,

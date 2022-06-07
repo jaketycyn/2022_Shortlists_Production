@@ -2,6 +2,8 @@ import { useAppContext } from "../pages/context/appContext";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import UserItemIndividual from "./UserItemIndividual";
+
 import {
   Wrapper,
   CardWrapper,
@@ -46,11 +48,13 @@ const UserListIndividual = ({ _id }) => {
     sendListToFriend,
     deleteItemId,
     setDeleteItemId,
+    user,
   } = useAppContext();
 
   const [sendIsOpen, setSendIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
+  const [selected, setSelected] = useState(false);
 
   const parentListId = activeList[0]._id;
   const filteredListByParentId = allUserItems.filter(
@@ -128,6 +132,17 @@ const UserListIndividual = ({ _id }) => {
     await toggleDeleteModal();
   };
 
+  //Toggle Selection
+  // const toggleSelection = async (item, itemIndex) => {
+  //   console.log("item");
+  //   console.log(item);
+  //   console.log("itemIndex");
+  //   console.log(itemIndex);
+  //   const status = !item.selection[itemIndex].picked;
+  // };
+
+  const ListSubmit = () => {};
+
   return (
     <Wrapper className="Origin">
       <form className="form" onSubmit={handleSubmit}>
@@ -195,43 +210,22 @@ const UserListIndividual = ({ _id }) => {
           <CardHeading>No items in list. Add one above</CardHeading>
         )}
         <div>
-          {filteredListByParentId.map((item) => {
+          {/* need to add key in the future*/}
+          {filteredListByParentId.map((item, key) => {
             return (
-              <ItemWrapper key={item._id} itemtitle={item.itemTitle}>
-                <ItemHeader>{item.itemTitle}</ItemHeader>
-                <div
-                  className="delete"
-                  onClick={() => toggleDeleteModal(item._id)}
-                >
-                  <ItemIcon className="big">
-                    <Trash />
-                  </ItemIcon>
-                  {/* Delete Modal */}
-                  <DeletionModal
-                    isOpen={deleteIsOpen}
-                    afterOpen={afterOpen}
-                    beforeClose={beforeClose}
-                    onBackgroundClick={toggleDeleteModal}
-                    onEscapeKeydown={toggleDeleteModal}
-                    opacity={opacity}
-                    backgroundProps={{ opacity }}
-                    id={item._id}
-                  >
-                    <h4>Delete this Item?</h4>
-                    <button
-                      className="delete"
-                      onClick={() => handleDeleteItem(item._id)}
-                    >
-                      Yes
-                    </button>
-                    <button className="close" onClick={() => resetDeleteId("")}>
-                      No
-                    </button>
-                  </DeletionModal>
-                </div>
-              </ItemWrapper>
+              <UserItemIndividual
+                // for passing everything down the line/testing
+                //item={item}
+                filteredListByParentId={filteredListByParentId}
+                itemId={item._id}
+                selection={item.selection}
+                itemName={item.itemTitle}
+              />
             );
           })}
+        </div>
+        <div>
+          <button onClick={() => ListSubmit()}>Submit</button>
         </div>
       </form>
     </Wrapper>

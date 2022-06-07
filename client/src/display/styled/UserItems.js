@@ -9,9 +9,9 @@ export const ItemWrapper = styled.article`
   border-style: solid;
   border-radius: 1rem;
   border-color: ${(props) => props.theme.colors.secondaryBrownDark};
-  /* margin: 10px 50px 20px; */
+  background-color: ${(props) => (props.selected ? "red" : "none")};
+
   //text
-  text-align: center;
   height: 7rem;
   margin: 1rem 2rem;
 
@@ -52,12 +52,8 @@ export const ItemWrapper = styled.article`
 `;
 
 export const ItemHeader = styled.div`
-  /* display: grid; */
   font-size: 24px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: auto;
+  align-self: center;
 `;
 
 // export const CardHeading = styled.h1`

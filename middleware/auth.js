@@ -8,8 +8,8 @@ const auth = async (req, res, next) => {
   console.log("authHeader");
 
   if (!authHeader || !authHeader.startsWith("Bearer")) {
-    console.log(authHeader);
-    console.log("no auth header or authheader with bearer");
+    // console.log(authHeader);
+    // console.log("no auth header or authheader with bearer");
     throw new UnAuthenticatedError("Authentication Invalid");
   }
 

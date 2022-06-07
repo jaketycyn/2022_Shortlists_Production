@@ -9,15 +9,18 @@ import {
 import UserCustomList from "../models/UserCustomList.js";
 
 const addItem = async (req, res) => {
-  const { itemTitle, parentListId, insideList, userId, creatorId } = req.body;
+  const { itemTitle, parentListId, insideList, userSelection, creatorId } =
+    req.body;
   // console.log("req.body");
   // console.log(req.body);
   // console.log(itemTitle);
+  console.log(userSelection);
 
   // console.log("insideList: " + insideList);
   // console.log("userId: " + userId);
   //console.log("creatorId: " + creatorId);
-
+  console.log("userSelection: " + userSelection);
+  console.log(JSON.stringify(userSelection));
   // res.send("addItem");
 
   if (!itemTitle) {
@@ -34,6 +37,7 @@ const addItem = async (req, res) => {
     req.body.createdById = req.user.userId;
     req.body.ownerId = req.user.userId;
     req.body.parentListId = parentListId;
+    req.body.selection = userSelection;
     const userItem = await UserCustomListItem.create(req.body);
     res.status(StatusCodes.CREATED).json({ userItem });
   }
@@ -53,13 +57,15 @@ const addItem = async (req, res) => {
 };
 
 const addSentItems = async (req, res) => {
-  const { sentListId, itemsToCopy, friendIdentifier } = req.body;
+  const { sentListId, itemsToCopy, friendIdentifier, userSelection } = req.body;
   console.log("req.body");
   console.log(req.body);
   console.log("req.body.sentListId");
   console.log(req.body.sentListId);
   console.log("req.body.itemsToCopy");
   console.log(req.body.itemsToCopy);
+  console.log(req.body.userSelection);
+  console.log("req.body.userSelection");
 
   const sentItems = req.body.itemsToCopy;
   console.log("sentItems");
@@ -85,22 +91,22 @@ const getAllItems = async (req, res) => {
   const { userListIds } = req.params;
 
   // testing console logs
-  console.log("req.params");
-  console.log(req.params);
+  // console.log("req.params");
+  // console.log(req.params);
 
-  console.log("userListIds");
-  console.log(userListIds);
+  // console.log("userListIds");
+  // console.log(userListIds);
   //taking giant string of ids and creating array
   if (userListIds) {
     const newUserListIds = userListIds.split(",");
 
-    console.log("newUserListIds");
-    console.log(newUserListIds);
+    //console.log("newUserListIds");
+    //console.log(newUserListIds);
     const allUserItems = await UserCustomListItem.find({
       parentListId: { $in: newUserListIds },
     });
 
-    console.log("allUserItems " + allUserItems);
+    //console.log("allUserItems " + allUserItems);
 
     res.status(StatusCodes.OK).json({
       allUserItems,
@@ -140,9 +146,9 @@ const deleteItem = async (req, res) => {
 
   const item = await UserCustomListItem.findOne({ _id: itemId });
 
-  console.log("req.params");
-  console.log(req.params);
-  console.log("item: " + item);
+  // console.log("req.params");
+  // console.log(req.params);
+  // console.log("item: " + item);
 
   if (!item) {
     throw new NotFoundError(`No item with id: ${itemId}`);

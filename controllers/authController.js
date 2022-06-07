@@ -63,10 +63,10 @@ const updateUser = async (req, res) => {
 const findUser = async (req, res) => {
   const { userIdentifier } = req.params;
   try {
-    console.log("req.params");
-    console.log(req.params);
-    console.log("req.body");
-    console.log(req.body);
+    // console.log("req.params");
+    // console.log(req.params);
+    // console.log("req.body");
+    // console.log(req.body);
     console.log("userIdentifier: " + userIdentifier);
 
     const foundUser = await User.findOne({ email: userIdentifier });
