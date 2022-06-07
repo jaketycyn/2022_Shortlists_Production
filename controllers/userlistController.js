@@ -33,11 +33,11 @@ const createSocialList = async (req, res) => {
   const { listTitle } = req.params;
   const { friendIdentifier } = req.body;
   friendIdentifier;
-  console.log("Inside createSocialList");
-  console.log("req.params");
-  console.log(req.params);
-  console.log("req.body");
-  console.log(req.body);
+  // console.log("Inside createSocialList");
+  // console.log("req.params");
+  // console.log(req.params);
+  // console.log("req.body");
+  // console.log(req.body);
   if (!listTitle) {
     throw new BadRequestError("Please provide a title for your list");
   }
@@ -61,8 +61,8 @@ const getAllLists = async (req, res) => {
     contributors: req.user.userId,
   });
 
-  console.log("userContributorList");
-  console.log(userContributorList);
+  // console.log("userContributorList");
+  // console.log(userContributorList);
   //numOfPages hard coded to 1 for now but can make dynamic to allow flipping through multiple pages of lists later instead of infinite scrolling
   res.status(StatusCodes.OK).json({
     userContributorList,
