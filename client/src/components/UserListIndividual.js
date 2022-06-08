@@ -33,6 +33,7 @@ const UserListIndividual = ({ _id }) => {
   const {
     activeList,
     setCurrentUserListItems,
+    currentUserListItems,
     allUserItems,
     isLoading,
     clearAlert,
@@ -221,12 +222,17 @@ const UserListIndividual = ({ _id }) => {
         <div>
           {/* need to add key in the future*/}
           {filteredListByParentId.map((item, key) => {
+            const itemIndex = currentUserListItems.findIndex(
+              (x) => x._id === item._id
+            );
+
             return (
               <UserItemIndividual
                 // for passing everything down the line/testing
                 //item={item}
                 filteredListByParentId={filteredListByParentId}
                 itemId={item._id}
+                itemIndex={itemIndex}
                 selection={item.selection}
                 itemName={item.itemTitle}
               />

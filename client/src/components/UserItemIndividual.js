@@ -11,9 +11,10 @@ import DeletionModal from "../display/modals/Deletion";
 import { Share } from "@styled-icons/bootstrap/Share";
 import { Trash } from "@styled-icons/bootstrap/Trash";
 
-const UserItemIndividual = ({ itemId, itemName, selection }) => {
+const UserItemIndividual = ({ itemId, itemIndex, itemName }) => {
   const {
     activeList,
+    currentUserListItems,
     allUserItems,
     isLoading,
     clearAlert,
@@ -32,8 +33,6 @@ const UserItemIndividual = ({ itemId, itemName, selection }) => {
     setDeleteItemId,
     user,
   } = useAppContext();
-
-  const parentListId = activeList[0]._id;
 
   function toggleSendModal(e) {
     setOpacity(0);
@@ -60,32 +59,6 @@ const UserItemIndividual = ({ itemId, itemName, selection }) => {
   }
 
   const title = activeList[0].listTitle;
-
-  //test setup use tutorial setup for final version.
-  const handleSubmit = (e) => {
-    //doing both friend title submit + item list submit in 1 submit button. Could be better to separate, but i believe by setting up explicit "if" statements with variables I'll be able to control for each use case.
-    e.preventDefault();
-    if (!itemTitle && !friendTitle) {
-      displayAlert();
-      return;
-    }
-
-    if (itemTitle && !friendTitle) {
-      createUserListItem();
-      //might put clear alert else where. This is for a nice popup notification to give user feedback. Could move this to within the reducer itself later.
-      clearAlert();
-      getUserCreatedListItems();
-    }
-    if (friendTitle && !itemTitle) {
-      console.log("friend submit fired");
-
-      sendListToFriend();
-      //might put clear alert else where. This is for a nice popup notification to give user feedback. Could move this to within the reducer itself later.
-      // clearAlert();
-      // getUserCreatedListItems();
-    }
-  };
-
   const handleDeleteItem = async (id) => {
     await deleteUserCreatedListItem(deleteItemId);
     await getUserCreatedListItems();
@@ -117,13 +90,20 @@ const UserItemIndividual = ({ itemId, itemName, selection }) => {
   const [opacity, setOpacity] = useState(0);
   const [selected, setSelected] = useState(false);
 
-  console.log("selection");
-  console.log(selection);
-  const userSelectedIndex = selection.findIndex((x) => x.userId === user._id);
+  // const itemIndex = currentUserListItems.findIndex((x) => x._id === itemId);
 
-  useEffect(() => {
-    setSelected(selection[userSelectedIndex].picked);
-  }, []);
+  console.log("itemIndex");
+  console.log(itemIndex);
+
+  // const findingIndex = () => {
+  //   const userSelectedIndex = currentUserListItems[
+  //     itemIndex
+  //   ].selection.findIndex((x) => x.userId === user._id);
+  // };
+
+  // useEffect(() => {
+  //   setSelected(currentUserListItems[itemIndex].selection[userSelectedIndex].picked);
+  // }, []);
 
   const toggleSelection = async (selected) => {
     setSelected(!selected);
