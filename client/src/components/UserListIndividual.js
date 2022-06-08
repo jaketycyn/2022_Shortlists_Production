@@ -32,6 +32,7 @@ import { Trash } from "@styled-icons/bootstrap/Trash";
 const UserListIndividual = ({ _id }) => {
   const {
     activeList,
+    setCurrentUserListItems,
     allUserItems,
     isLoading,
     clearAlert,
@@ -60,6 +61,8 @@ const UserListIndividual = ({ _id }) => {
   const filteredListByParentId = allUserItems.filter(
     (item) => item.parentListId === parentListId
   );
+
+  //updating context with Current List/items
 
   // console.log("filteredListByParentId");
   // console.log(filteredListByParentId);
@@ -142,6 +145,12 @@ const UserListIndividual = ({ _id }) => {
   // };
 
   const ListSubmit = () => {};
+
+  useEffect(() => {
+    //taking items that belong to this list and setting them as an array known as currentUserListItems
+    //we'll use this list to denote selection modifications, and rankings in future at a frontend level before 'submitting' and updating our servers with user selections.
+    setCurrentUserListItems(filteredListByParentId);
+  }, []);
 
   return (
     <Wrapper className="Origin">

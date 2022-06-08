@@ -19,6 +19,7 @@ import {
   GET_USER_LIST_SUCCESS,
   DELETE_USER_LIST_BEGIN,
   DELETE_USER_LIST_SUCCESS,
+  SET_CURRENT_USER_LIST_ITEMS,
   //MANIPULATING LISTS/ITEMS
   SET_ACTIVE_LIST,
   SET_INSIDE_LIST,
@@ -179,6 +180,13 @@ const reducer = (state, action) => {
       insideList: action.payload.status,
     };
   }
+  if (action.type === SET_CURRENT_USER_LIST_ITEMS) {
+    return {
+      ...state,
+      currentUserListItems: action.payload.list,
+    };
+  }
+
   if (action.type === SET_DELETE_ITEM_ID) {
     console.log("action.payload.id");
     console.log(action.payload.id);

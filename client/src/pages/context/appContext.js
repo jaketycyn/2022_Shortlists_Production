@@ -21,6 +21,7 @@ import {
   DELETE_USER_LIST_SUCCESS,
   SET_ACTIVE_LIST,
   SET_INSIDE_LIST,
+  SET_CURRENT_USER_LIST_ITEMS,
   //USER ITEMS
   SET_DELETE_ITEM_ID,
   CREATE_USER_LIST_ITEM_BEGIN,
@@ -60,6 +61,7 @@ const initialState = {
   totalUserCreatedItems: 0,
   deleteItemId: "",
 
+  currentUserListItems: [],
   allUserItems: [],
 
   //numOfPages = changing value in listController in the future. Currently hard coded to 1. Similar thing with page. But we'll update page in the future to dictate the current page/which part of of UserCreatedList array is shown to user.
@@ -387,6 +389,18 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const setCurrentUserListItems = (list) => {
+    console.log("current list items");
+    console.log(list);
+    try {
+      if (list.length >= 1) {
+        dispatch({ type: SET_CURRENT_USER_LIST_ITEMS, payload: { list } });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const setDeleteItemId = (id) => {
     console.log("id");
     console.log(id);
@@ -556,6 +570,7 @@ const AppProvider = ({ children }) => {
         deleteUserCreatedListItem,
         setActiveList,
         setInsideList,
+        setCurrentUserListItems,
         setDeleteItemId,
         createUserListItem,
         getUserCreatedListItems,
