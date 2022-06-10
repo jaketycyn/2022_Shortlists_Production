@@ -184,6 +184,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       currentUserListItems: action.payload.list,
+      //listLoaded: true,
     };
   }
 
