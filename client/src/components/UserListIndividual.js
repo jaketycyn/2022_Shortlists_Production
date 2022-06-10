@@ -136,21 +136,20 @@ const UserListIndividual = ({ _id }) => {
     await toggleDeleteModal();
   };
 
-  //Toggle Selection
-  // const toggleSelection = async (item, itemIndex) => {
-  //   console.log("item");
-  //   console.log(item);
-  //   console.log("itemIndex");
-  //   console.log(itemIndex);
-  //   const status = !item.selection[itemIndex].picked;
-  // };
-
   const ListSubmit = () => {};
 
   useEffect(() => {
     //taking items that belong to this list and setting them as an array known as currentUserListItems
     //we'll use this list to denote selection modifications, and rankings in future at a frontend level before 'submitting' and updating our servers with user selections.
-    setCurrentUserListItems(filteredListByParentId);
+    new Promise(function (resolve) {
+      //timeout can be changed
+      setTimeout(() => resolve(1), 1000);
+    }).then(function (itemIndex) {
+      setCurrentUserListItems(filteredListByParentId);
+      // console.log(
+      //   "currentUserListItems: " + JSON.stringify(currentUserListItems, 0, 2)
+      // );
+    });
   }, []);
 
   return (
@@ -222,18 +221,19 @@ const UserListIndividual = ({ _id }) => {
         <div>
           {/* need to add key in the future*/}
           {filteredListByParentId.map((item, key) => {
-            const itemIndex = currentUserListItems.findIndex(
-              (x) => x._id === item._id
-            );
+            //   const itemIndex = currentUserListItems.findIndex(
+            //     (x) => x._id === item._id
+            //   );
+            //console.log("itemIndex: " + itemIndex);
 
             return (
               <UserItemIndividual
                 // for passing everything down the line/testing
-                //item={item}
+                item={item}
                 filteredListByParentId={filteredListByParentId}
                 itemId={item._id}
-                itemIndex={itemIndex}
-                selection={item.selection}
+                //itemIndex={itemIndex}
+                //selected={selectedStatus}
                 itemName={item.itemTitle}
               />
             );

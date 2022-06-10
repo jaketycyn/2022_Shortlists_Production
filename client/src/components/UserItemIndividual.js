@@ -11,7 +11,7 @@ import DeletionModal from "../display/modals/Deletion";
 import { Share } from "@styled-icons/bootstrap/Share";
 import { Trash } from "@styled-icons/bootstrap/Trash";
 
-const UserItemIndividual = ({ itemId, itemIndex, itemName }) => {
+const UserItemIndividual = ({ item, itemId, itemIndex, itemName }) => {
   const {
     activeList,
     currentUserListItems,
@@ -58,62 +58,108 @@ const UserItemIndividual = ({ itemId, itemIndex, itemName }) => {
     });
   }
 
-  const title = activeList[0].listTitle;
   const handleDeleteItem = async (id) => {
     await deleteUserCreatedListItem(deleteItemId);
     await getUserCreatedListItems();
   };
 
-  const handleItemInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    // console.log(`${name}: ${value}`)
-    handleChange({ name, value });
-  };
+  // const handleItemInput = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   // console.log(`${name}: ${value}`)
+  //   handleChange({ name, value });
+  // };
 
   const resetDeleteId = async (id) => {
     await setDeleteItemId(id);
     await toggleDeleteModal();
   };
 
-  //Toggle Selection
-  // const toggleSelection = async (item, itemIndex) => {
-  //   console.log("item");
-  //   console.log(item);
-  //   console.log("itemIndex");
-  //   console.log(itemIndex);
-  //   const status = !item.selection[itemIndex].picked;
-  // };
-
   const [sendIsOpen, setSendIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
-  const [selected, setSelected] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(false);
 
-  // const itemIndex = currentUserListItems.findIndex((x) => x._id === itemId);
-
-  console.log("itemIndex");
-  console.log(itemIndex);
-
-  // const findingIndex = () => {
-  //   const userSelectedIndex = currentUserListItems[
-  //     itemIndex
-  //   ].selection.findIndex((x) => x.userId === user._id);
-  // };
-
-  // useEffect(() => {
-  //   setSelected(currentUserListItems[itemIndex].selection[userSelectedIndex].picked);
-  // }, []);
-
-  const toggleSelection = async (selected) => {
-    setSelected(!selected);
+  const toggleSelection = async (selectedStatus) => {
+    setSelectedStatus(!selectedStatus);
+    console.log(selectedStatus);
   };
 
+  // console.log("item: " + JSON.stringify(item, 0, 2));
+  // console.log(
+  //   "currentUserListItems: " + JSON.stringify(currentUserListItems, 0, 2)
+  // );
+
+  const findItemIndex = async () => {
+    const result = await currentUserListItems.findIndex(
+      (x) => x._id === item._id
+    );
+    console.log(result);
+  };
+
+  const findUserIndex = async (user) => {
+    const result = await currentUserListItems[itemIndex].selection.findIndex(
+      (x) => x.userId === user._id
+    );
+  };
+
+  useEffect(
+    (user) => {
+      findItemIndex();
+      findUserIndex(user);
+    },
+    [currentUserListItems]
+  );
+
+  findItemIndex();
+  //old useEffect
+  // useEffect(() => {
+  //   new Promise(function (resolve) {
+  //     //timeout can be changed
+  //     setTimeout(() => resolve(1), 1000);
+  //   })
+  //     .then(function () {
+  //       const itemIndex = currentUserListItems.findIndex(
+  //         (x) => x._id === item._id
+  //       );
+  //       console.log("itemIndex: " + itemIndex);
+  //       console.log(
+  //         "currentUserListItems[itemIndex]: " +
+  //           JSON.stringify(currentUserListItems[itemIndex], 0, 2)
+  //       );
+  //       console.log("user._id: " + user._id);
+  //       console.log("user._id: " + user._id);
+  //       return itemIndex;
+  //     })
+  //     .then(function (itemIndex) {
+  //       const userIndex = currentUserListItems[itemIndex].selection.findIndex(
+  //         (x) => x.userId === user._id
+  //       );
+  //       console.log("userIndex: " + userIndex);
+  //       console.log(userIndex);
+  //       return userIndex;
+  //     })
+  //     .then(function (itemIndex, userIndex) {
+  //       console.log("itemIndex: " + itemIndex);
+  //       console.log("userIndex: " + userIndex);
+  //       const selection =
+  //         currentUserListItems[itemIndex].selection[userIndex].picked;
+  //       console.log("selection");
+  //       console.log(selection);
+  //       return selection;
+  //     })
+  //     .then(function (selection) {
+  //       setSelectedStatus(selection);
+  //     });
+  // }, [currentUserListItems]);
+
   return (
-    <ItemWrapper itemName={itemName} selected={selected}>
-      <ItemHeader onClick={() => toggleSelection(selected)}>
-        {itemName}
-      </ItemHeader>
+    <ItemWrapper
+      itemName={itemName}
+      selected={selectedStatus}
+      onClick={() => toggleSelection(selectedStatus)}
+    >
+      <ItemHeader>{itemName}</ItemHeader>
 
       <div className="delete" onClick={() => toggleDeleteModal(itemId)}>
         <ItemIcon className="big">
